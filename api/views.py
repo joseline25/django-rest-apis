@@ -3,6 +3,9 @@ from rest_framework.response import Response
 from base.models import *
 from .serializers import AdvocateSerializer
 from django.shortcuts import render, redirect
+# for class views
+
+from rest_framework.views import APIView
 
 # our endpoints
 
@@ -93,3 +96,16 @@ def advocate_add(request):
         username=request.data['username']
     )
     return Response('added !!!')
+
+
+# class based views as an alternative
+# the advantage here is that you don't need to specify that it is a get or post or ... 
+# request
+# you just have to use the defined method of the class
+# first of all, we will import 
+# from rest_framework.views import APIView
+
+class AdvocateDetails(APIView):
+    # method to get 
+    def get(self, request, id):
+        return Response('username')
