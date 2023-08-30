@@ -1,0 +1,38 @@
+<!-- templates/yourapp/yourtemplate.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Your Template</title>
+</head>
+<body>
+    <h1>Your Data:</h1>
+    <ul id="data-list"></ul>
+
+    <script>
+        // Make an HTTP request to the API endpoint
+        var request = new XMLHttpRequest();
+        request.open('GET', "{% url 'your-data-api' %}", true);
+        request.onload = function() {
+            if (request.status >= 200 && request.status < 400) {
+                var data = JSON.parse(request.responseText);
+                var dataList = document.getElementById("data-list");
+
+                // Iterate over the retrieved data and append it to the list
+                data.forEach(function(item) {
+                    var listItem = document.createElement("li");
+                    listItem.textContent = item.field_name;  // Modify to match your data fields
+                    dataList.appendChild(listItem);
+                });
+            } else {
+                // Handle error cases
+                console.error("Error fetching data");
+            }
+        };
+        request.onerror = function() {
+            // Handle connection errors
+            console.error("Connection error");
+        };
+        request.send();
+    </script>
+</body>
+</html>
